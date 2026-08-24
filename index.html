@@ -95,6 +95,17 @@ header .sp{flex:1}
   transform-origin:50% 50%;will-change:transform;
 }
 .shotbox>img{width:100%;height:100%;object-fit:cover;object-position:top center}
+.redact{
+  position:absolute;border-radius:6px;
+  background:rgba(20,17,17,.62);
+  backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);
+  border:1px solid rgba(232,90,86,.5);
+  display:grid;place-items:center;overflow:hidden;
+}
+.redact span{
+  color:#E8B65C;font-weight:800;white-space:nowrap;
+  font-size:calc(11px * var(--inv,1));opacity:.95;
+}
 .mk{
   position:absolute;width:34px;height:34px;border-radius:50%;
   background:var(--red);color:#fff;display:grid;place-items:center;
@@ -232,6 +243,7 @@ const CH = [
         en:"Before: every quotation written from scratch, the archive scattered across machines, and nobody knew who opened what. Now: two systems working together — one writes the letter on the real letterhead with signature and stamp, the other stores everything and searches it instantly."},
   ar_:16/10.9,
   shot:"assets/shots/quote-builder.png",
+  redact:[{x:2.0,y:74.2,w:27.5,h:5.2},{x:2.0,y:81.5,w:27.5,h:8.4}],
   beats:[
     {s:1.00,ox:50,oy:40,mx:null,
      t:{ar:"الشاشة كلها",en:"The whole screen"},
@@ -420,6 +432,9 @@ function stageHTML(ch, shot, ar, beats, key){
       <div class="frame">
         <div class="shotbox" style="--ar:${ar}">
           <img src="${shot}" alt="">
+          ${(key==="a" && ch.redact ? ch.redact : []).map(r=>
+            `<span class="redact" style="left:${r.x}%;top:${r.y}%;width:${r.w}%;height:${r.h}%">
+               <span>${L==="ar"?"بيانات عميل":"client data"}</span></span>`).join("")}
           ${beats.map((b,i)=> b.mx==null?"":
             `<span class="mk" data-i="${i}" style="left:${b.mx}%;top:${b.my}%">${i+1}</span>`).join("")}
         </div>
