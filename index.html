@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>شغل مدماك — Medmac Work</title>
+<meta name="description" content="كل ما بُني لشركة مدماك الكويت — ما الذي يوفّره، وكيف يعمل، خطوة بخطوة.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B0A0A; --ink:#F6EFEA; --dim:#A79C98; --line:#2C2422;
+  --red:#C11812; --red-2:#E85A56; --gold:#C8A14C; --paper:#F5E9E2;
+  --ok:#6FD3A2;
+  --stage-h:100svh;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:'Tajawal','Geeza Pro','SF Arabic',system-ui,-apple-system,sans-serif;
+  font-size:18px;line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+body[dir=ltr]{font-family:'Tajawal',system-ui,-apple-system,sans-serif}
+img{display:block;max-width:100%}
+.wrap{width:min(1180px,92vw);margin-inline:auto}
+
+/* ── top bar ── */
+header{
+  position:fixed;inset-block-start:0;inset-inline:0;z-index:60;
+  display:flex;align-items:center;gap:14px;padding:14px min(4vw,32px);
+  background:linear-gradient(to bottom,rgba(11,10,10,.92),rgba(11,10,10,0));
+  pointer-events:none;
+}
+header>*{pointer-events:auto}
+header img{height:30px;background:#fff;padding:6px 10px;border-radius:9px}
+header .sp{flex:1}
+.btn{
+  border:1px solid var(--line);background:rgba(20,17,17,.7);color:var(--ink);
+  border-radius:999px;padding:8px 16px;font:inherit;font-weight:700;font-size:14.5px;
+  cursor:pointer;backdrop-filter:blur(8px);text-decoration:none;white-space:nowrap;
+}
+.btn:hover{border-color:var(--red-2);color:var(--red-2)}
+
+/* ── progress rail ── */
+.rail{position:fixed;inset-block:0;inset-inline-end:14px;z-index:55;
+  display:flex;flex-direction:column;gap:9px;align-items:center;justify-content:center;
+  pointer-events:none}
+.rail b{width:8px;height:8px;border-radius:50%;background:#3A302E;transition:all .3s var(--ease);
+  pointer-events:auto;cursor:pointer}
+.rail b.on{background:var(--red-2);height:26px;border-radius:5px}
+
+/* ── hero ── */
+.hero{min-height:100svh;display:grid;place-items:center;position:relative;overflow:hidden;
+  text-align:center;padding:90px 20px 40px}
+.hero .bgimg{position:absolute;inset:0;background-size:cover;background-position:center;
+  opacity:.20;filter:grayscale(.35) contrast(1.05)}
+.hero .veil{position:absolute;inset:0;
+  background:radial-gradient(110% 80% at 50% 40%,rgba(11,10,10,.25),rgba(11,10,10,.96) 72%)}
+.hero .in{position:relative;max-width:900px}
+.hero .kick{color:var(--gold);font-weight:800;letter-spacing:.26em;font-size:13px;
+  text-transform:uppercase}
+.hero h1{font-size:clamp(44px,9vw,104px);font-weight:900;line-height:1.02;margin-top:14px;
+  letter-spacing:-.02em}
+.hero h1 em{font-style:normal;color:var(--red-2)}
+.hero p{color:var(--dim);font-size:clamp(17px,2.3vw,22px);margin-top:20px;
+  max-width:38ch;margin-inline:auto}
+.stats{display:flex;gap:clamp(18px,4vw,52px);justify-content:center;flex-wrap:wrap;margin-top:44px}
+.stats div{text-align:center}
+.stats b{display:block;font-size:clamp(28px,5vw,44px);font-weight:900;color:var(--paper);
+  font-variant-numeric:tabular-nums;line-height:1}
+.stats span{display:block;color:var(--dim);font-size:14px;margin-top:6px}
+.scrollhint{position:absolute;inset-block-end:26px;inset-inline:0;color:var(--dim);font-size:13.5px;
+  display:flex;flex-direction:column;align-items:center;gap:7px}
+.scrollhint i{width:1px;height:34px;background:linear-gradient(var(--dim),transparent);
+  animation:drop 2s var(--ease) infinite}
+@keyframes drop{0%{opacity:0;transform:translateY(-10px)}40%{opacity:1}100%{opacity:0;transform:translateY(12px)}}
+
+/* ── chapter ── */
+.chapter{position:relative}
+.track{position:relative}
+.stage{
+  position:sticky;inset-block-start:0;height:var(--stage-h);overflow:hidden;
+  display:grid;grid-template-columns:1fr;align-items:center;
+}
+.frame{
+  position:absolute;inset:0;display:grid;place-items:center;overflow:hidden;
+}
+.shotbox{
+  position:relative;width:min(1100px,86vw);aspect-ratio:var(--ar,16/10);
+  border-radius:14px;overflow:hidden;border:1px solid var(--line);
+  box-shadow:0 40px 120px rgba(0,0,0,.7);background:#111;
+  transform-origin:50% 50%;will-change:transform;
+}
+.shotbox>img{width:100%;height:100%;object-fit:cover;object-position:top center}
+.mk{
+  position:absolute;width:34px;height:34px;border-radius:50%;
+  background:var(--red);color:#fff;display:grid;place-items:center;
+  font-weight:900;font-size:15px;border:2.5px solid #fff;
+  box-shadow:0 4px 18px rgba(0,0,0,.6);
+  transform:translate(-50%,-50%) scale(var(--inv,1));
+  opacity:0;transition:opacity .35s var(--ease);
+}
+.mk.on{opacity:1}
+.mk::after{
+  content:"";position:absolute;inset:-9px;border-radius:50%;
+  border:2px solid var(--red);opacity:.55;animation:ping 1.9s ease-out infinite;
+}
+@keyframes ping{0%{transform:scale(.75);opacity:.7}100%{transform:scale(1.5);opacity:0}}
+
+/* the beat caption */
+.caption{
+  position:absolute;inset-block-end:clamp(22px,5vh,54px);inset-inline-start:50%;
+  transform:translateX(50%);width:min(680px,88vw);z-index:5;
+  background:rgba(14,12,12,.86);backdrop-filter:blur(14px);
+  border:1px solid var(--line);border-radius:16px;padding:20px 24px;
+  transition:opacity .3s var(--ease),transform .3s var(--ease);
+}
+body[dir=ltr] .caption{transform:translateX(-50%)}
+.caption .n{display:inline-flex;align-items:center;justify-content:center;
+  width:27px;height:27px;border-radius:50%;background:var(--red);color:#fff;
+  font-weight:900;font-size:13.5px;margin-inline-end:10px;vertical-align:2px}
+.caption h4{display:inline;font-size:clamp(18px,2.4vw,23px);font-weight:800}
+.caption p{color:var(--dim);font-size:clamp(15px,1.9vw,17px);margin-top:9px;line-height:1.6}
+
+/* chapter opener + closer */
+.opener{min-height:100svh;display:grid;place-items:center;padding:110px 20px 70px;position:relative}
+.opener .in{width:min(860px,92vw)}
+.opener .idx{color:var(--red-2);font-weight:900;letter-spacing:.24em;font-size:13px}
+.opener h2{font-size:clamp(34px,6.4vw,68px);font-weight:900;line-height:1.06;margin-top:12px;
+  letter-spacing:-.02em}
+.juice{
+  margin-top:26px;border-inline-start:4px solid var(--red);padding-inline-start:20px;
+}
+.juice b{display:block;font-size:clamp(24px,4.4vw,42px);font-weight:900;color:var(--paper);
+  line-height:1.15}
+.juice span{display:block;color:var(--dim);font-size:clamp(16px,2.2vw,19px);margin-top:8px}
+.opener .lede{color:var(--dim);font-size:clamp(16px,2.1vw,19px);margin-top:26px;max-width:52ch}
+
+.doc{padding:clamp(60px,10vh,120px) 0}
+.doc .in{width:min(820px,92vw);margin-inline:auto}
+.doc h3{font-size:13px;font-weight:900;letter-spacing:.2em;color:var(--gold);
+  text-transform:uppercase;margin-bottom:18px}
+.doc h4{font-size:clamp(21px,3vw,27px);font-weight:800;margin:26px 0 8px}
+.doc p{color:#CFC4BF;margin:9px 0;font-size:clamp(16px,2vw,18px)}
+.doc ul{margin:12px 0;padding-inline-start:22px;color:#CFC4BF}
+.doc li{margin:7px 0}
+.doc .kv{display:grid;gap:10px;margin-top:20px}
+.doc .kv div{display:flex;gap:14px;align-items:baseline;border-block-end:1px solid var(--line);
+  padding-block-end:10px}
+.doc .kv b{flex:none;min-width:min(150px,34vw);color:var(--paper);font-weight:800;font-size:15.5px}
+.doc .kv span{color:var(--dim);font-size:16px}
+.pill{display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:5px 13px;
+  font-size:13.5px;font-weight:800;background:rgba(111,211,162,.13);color:var(--ok)}
+.pill.you{background:rgba(232,182,92,.14);color:#E8B65C}
+
+footer{border-block-start:1px solid var(--line);padding:60px 20px 70px;text-align:center;color:var(--dim);font-size:15px}
+footer b{color:var(--paper)}
+
+@media (prefers-reduced-motion:reduce){
+  .mk::after{animation:none}
+  .scrollhint i{animation:none}
+  html{scroll-behavior:auto}
+}
+@media(max-width:760px){
+  .shotbox{width:94vw}
+  .caption{inset-block-end:16px;padding:15px 17px}
+  .rail{display:none}
+}
+</style>
+</head>
+<body dir="rtl">
+
+<header>
+  <img src="assets/brand/logo.png" alt="Medmac Kuwait">
+  <span class="sp"></span>
+  <button class="btn" id="lang">English</button>
+</header>
+
+<nav class="rail" id="rail"></nav>
+
+<section class="hero">
+  <div class="bgimg" style="background-image:url('assets/brand/hero.jpg')"></div>
+  <div class="veil"></div>
+  <div class="in">
+    <div class="kick" data-t="kick"></div>
+    <h1 data-t="h1"></h1>
+    <p data-t="sub"></p>
+    <div class="stats" id="stats"></div>
+  </div>
+  <div class="scrollhint"><i></i><span data-t="scroll"></span></div>
+</section>
+
+<main id="film"></main>
+
+<footer>
+  <b data-t="footA"></b><br>
+  <span data-t="footB"></span>
+</footer>
+
+<script>
+/* ══════════ strings ══════════ */
+let L = localStorage.getItem("mwLang") || "ar";
+const T = {
+  kick:{ar:"شركة مدماك الكويت للتجارة العامة والمقاولات",en:"Medmac Kuwait Co. For General Trading & Contracting"},
+  h1:{ar:"شغل <em>مدماك</em>.<br>وش يوفّر لك بالضبط.",en:"Medmac <em>Work</em>.<br>Exactly what it saves you."},
+  sub:{ar:"مو جولة في البرامج. كل فصل يبدأ بالفائدة، وبعدين الكاميرا تنزل على الشاشة وتوريك كيف.",
+       en:"Not a product tour. Every chapter opens with the payoff, then the camera dives into the screen and shows you how."},
+  scroll:{ar:"انزل",en:"Scroll"},
+  footA:{ar:"شركة مدماك الكويت للتجارة العامة والمقاولات",en:"Medmac Kuwait Co. For General Trading & Contracting"},
+  footB:{ar:"أُعدّ بواسطة محمد محمود · ٢٤ أغسطس ٢٠٢٦",en:"Prepared by Mohamed Mahmoud · 24 August 2026"},
+  docTitle:{ar:"التوثيق المكتوب",en:"Written documentation"},
+};
+const STATS=[
+  {n:"٤٬٧٢٩",e:"4,729",ar:"عرض سعر في الأرشيف",en:"quotations archived"},
+  {n:"١٦",e:"16",ar:"إعلاناً جاهزاً للنشر",en:"ads ready to publish"},
+  {n:"٥",e:"5",ar:"برامج تشتغل الآن",en:"programs running now"},
+  {n:"٢",e:"2",ar:"لغة في كل مستند",en:"languages per document"},
+];
+
+/* ══════════ the film ══════════ */
+const CH = [
+{
+  id:"quotations", ar:"عروض الأسعار", en:"Quotations",
+  h:{ar:"عرض السعر يطلع في دقائق، ولا واحد يضيع.",en:"A quotation goes out in minutes, and none get lost."},
+  juice:{ar:"٤٬٧٢٩ عرض سعر",en:"4,729 quotations"},
+  juiceSub:{ar:"كلها في مكان واحد، بحث فوري، وكل مندوب يشوف عروضه هو فقط.",
+            en:"One place, instant search, and each rep sees only their own."},
+  lede:{ar:"قبل: العرض يتكتب من الصفر كل مرة، والأرشيف ملفات مبعثرة على أجهزة مختلفة، ومحد يعرف مين فتح وش. الآن: نظامان يشتغلان مع بعض — واحد يكتب الخطاب على ورق الشركة بالتوقيع والختم، وواحد يحفظ كل شيء ويبحث فيه فوراً.",
+        en:"Before: every quotation written from scratch, the archive scattered across machines, and nobody knew who opened what. Now: two systems working together — one writes the letter on the real letterhead with signature and stamp, the other stores everything and searches it instantly."},
+  ar_:16/10.9,
+  shot:"assets/shots/quote-builder.png",
+  beats:[
+    {s:1.00,ox:50,oy:40,mx:null,
+     t:{ar:"الشاشة كلها",en:"The whole screen"},
+     d:{ar:"يسار: الحقول اللي تعبّيها. يمين: الورقة الحقيقية تتغيّر معك حرف بحرف. اللي تشوفه هو اللي يطلع.",
+        en:"Left: the fields you fill. Right: the real letter changing with you, letter by letter. What you see is what prints."}},
+    {s:2.55,ox:14,oy:34,mx:14,my:34,
+     t:{ar:"نوع العرض",en:"Quotation type"},
+     d:{ar:"تختار الفرع — مناقصات — واللغة. الورقة والترويسة والصياغة كلها تتبدّل معه.",
+        en:"Pick the branch — Tenders — and the language. Paper, letterhead and wording all switch with it."}},
+    {s:2.55,ox:14,oy:50,mx:14,my:50,
+     t:{ar:"مين يوقّع",en:"Who signs"},
+     d:{ar:"اسم الموقّع من قائمة. توقيعه وختم الشركة ينزلان في مكانهما الصحيح تلقائياً — مو صورة ملصوقة.",
+        en:"The signatory from a list. Their signature and the company stamp land in the right place automatically — not a pasted image."}},
+    {s:2.4,ox:15,oy:76,mx:15,my:76,
+     t:{ar:"الحقول",en:"The fields"},
+     d:{ar:"التاريخ، الشركة، لمن يُوجَّه، الموضوع، المشروع. ثمانية حقول — وخلص الخطاب.",
+        en:"Date, company, attention, subject, project. Eight fields — and the letter is done."}},
+    {s:1.9,ox:70,oy:46,mx:70,my:46,
+     t:{ar:"الورقة الرسمية",en:"The official paper"},
+     d:{ar:"ترويسة مدماك الأصلية الممسوحة من الورق الحقيقي، بالعلامة المائية والتوقيع والختم. تطبعها أو ترسلها PDF.",
+        en:"The real Medmac letterhead scanned from actual paper, with watermark, signature and stamp. Print it or send the PDF."}},
+  ],
+  shot2:"assets/shots/quotations-login.png",
+  ar2:1440/960,
+  beats2:[
+    {s:1.0,ox:50,oy:45,mx:null,
+     t:{ar:"الأرشيف — «مين أنت؟»",en:"The archive — “Who are you?”"},
+     d:{ar:"شاشة واحدة، سؤال واحد. كل مندوب له كود، وما يشوف إلا عروضه هو. لا شبكة إنترنت — شبكة المكتب فقط.",
+        en:"One screen, one question. Each rep has a code and sees only their own. No internet — office network only."}},
+    {s:2.9,ox:50,oy:52,mx:50,my:52,
+     t:{ar:"كود واحد لكل شخص",en:"One code per person"},
+     d:{ar:"ما فيه اسم مستخدم وكلمة سر تُنسى. كود واحد. وكل فتح وكل تحميل ينكتب في سجل ما ينمسح.",
+        en:"No username and password to forget. One code. And every open and download is written to a log that cannot be erased."}},
+  ],
+  doc:{ar:[
+    ["ما الذي يحلّه","العرض كان يُكتب من الصفر في كل مرة، والأرشيف موزّع على أجهزة، ولا يوجد أثر لمن فتح أو أرسل ماذا."],
+    ["مولّد الخطابات","ثمانية حقول تُعبّأ، والمعاينة على ورق A4 الحقيقي تتحدّث مع كل حرف. الترويسة والتوقيع والختم والعلامة المائية مقصوصة من مسح الورق الأصلي، لا من تصميم مقلّد. يُنتج PDF بصفحة واحدة جاهزة للإرسال أو الطباعة، ويعمل أيضاً فاتورة دائنة عربية متعددة الصفحات."],
+    ["أرشيف العروض","٤٬٧٢٩ عرضاً محفوظاً. الدخول بكود واحد لكل مندوب، ولا يرى غير عروضه. البحث فوري عبر الأرشيف كله. سجل تدقيق ملحق لا يقبل الحذف. يعمل على شبكة المكتب فقط — لا يخرج شيء إلى الإنترنت."],
+    ["ما تحتاجه لتشغيله","برنامج «مولّد خطابات عروض الأسعار» و«عروض أسعار مدماك» مثبّتان على جهاز المكتب. الأرشيف يحتاج كود دخول: كود المدير عند محمد."],
+  ],en:[
+    ["What it fixes","Every quotation was written from scratch, the archive lived on scattered machines, and there was no trace of who opened or sent what."],
+    ["The letter builder","Eight fields to fill, with a live A4 preview that updates on every keystroke. Letterhead, signature, stamp and watermark are cut from a scan of the real paper, not a lookalike design. It outputs a one-page PDF ready to send or print, and also produces a multi-page Arabic credit invoice."],
+    ["The quotation archive","4,729 quotations stored. One access code per rep, and each sees only their own. Search is instant across the whole archive. An append-only audit log records every open. It runs on the office network only — nothing leaves for the internet."],
+    ["What you need to run it","The Quotation Letter Builder and Medmac Quotations are installed on the office Mac. The archive needs an access code; the manager code is with Mohamed."],
+  ]},
+  status:"ready"
+},
+{
+  id:"campaign", ar:"الحملة الإعلانية", en:"The Ad Campaign",
+  h:{ar:"١٦ إعلاناً جاهزاً، وكل رقم فيها له مصدر.",en:"16 finished ads, and every number in them has a source."},
+  juice:{ar:"جاهزة للنشر اليوم",en:"Ready to publish today"},
+  juiceSub:{ar:"الصور نهائية بمقاسات فيسبوك وإنستقرام، والنصوص جاهزة للنسخ، وتقويم ٣٠ يوماً، وردود جاهزة على أسئلة العملاء.",
+            en:"Final images at Facebook and Instagram sizes, copy ready to paste, a 30-day calendar, and ready answers to customer questions."},
+  lede:{ar:"الحملة موجّهة لقسم الصيانة وتنظيف الواجهات. ثلاثة مستويات ميزانية تختار منها، وسجل ادعاءات يمنع نشر أي جملة بلا مصدر موثّق — لأن الإعلان الذي لا يُثبت ما يقوله يُكلّف أكثر مما يجلب.",
+        en:"The campaign targets the maintenance and facade-cleaning division. Three budget levels to pick from, and a claims ledger that blocks any sentence without a documented source — because an ad that cannot back what it says costs more than it brings."},
+  ar_:1,
+  shot:"assets/shots/campaign-sheet.png",
+  beats:[
+    {s:1.0,ox:50,oy:50,mx:null,
+     t:{ar:"العائلة كاملة",en:"The whole family"},
+     d:{ar:"١٦ إعلاناً بأربع عائلات بصرية. نفس الهوية، نفس الشعار، نفس درجة الأحمر — تتعرّف عليها العين كإعلان مدماك قبل ما تقرأ.",
+        en:"16 ads in four visual families. Same identity, same logo, same red — the eye reads it as a Medmac ad before it reads a word."}},
+    {s:2.4,ox:22,oy:24,mx:22,my:24,
+     t:{ar:"إعلانات السؤال",en:"The question ads"},
+     d:{ar:"تبدأ بسؤال يخصّ مالك البرج: مين المسؤول لو سقط شيء من الواجهة؟ السؤال يوقف التمرير أكثر من العرض.",
+        en:"They open with a question aimed at a tower owner: who is liable if something falls from the facade? A question stops the scroll better than an offer."}},
+    {s:2.4,ox:74,oy:26,mx:74,my:26,
+     t:{ar:"إعلانات الأرقام",en:"The numbers ads"},
+     d:{ar:"سنة التأسيس، عدد الأبراج، أسماء المشاريع المنفّذة. كل رقم منها مربوط بمصدره في سجل الادعاءات.",
+        en:"Founding year, tower count, delivered project names. Every one of those numbers is tied to its source in the claims ledger."}},
+    {s:2.6,ox:50,oy:74,mx:50,my:74,
+     t:{ar:"كاروسيل المشاريع",en:"The project carousel"},
+     d:{ar:"خمس بطاقات لمشاريع حقيقية. المشاهد التوضيحية مكتوب عليها «صورة تعبيرية · مشروع موثّق» — لا نقدّم صورة مولّدة على أنها تصوير موقع.",
+        en:"Five cards for real projects. Illustrative scenes are labelled as such — a generated image is never presented as a site photograph."}},
+  ],
+  doc:{ar:[
+    ["ما الذي يحلّه","قسم الصيانة وتنظيف الواجهات لم يكن له وجود إعلاني منظّم، والمنافسون في الكويت ينشرون يومياً."],
+    ["ما الذي جهز","١٦ إعلاناً نهائياً بمقاسات ١٠٨٠×١٠٨٠ و١٠٨٠×١٣٥٠ و١٠٨٠×١٩٢٠ تغطي المنشور والقصة والكاروسيل. نصوص جاهزة للنسخ لكل إعلان. تقويم نشر ثلاثين يوماً. سكربتات ردود على الأسئلة المتكررة."],
+    ["سجل الادعاءات","كل جملة في الإعلانات مسجّلة مع مصدرها. أي جملة خارج السجل لا تُنشر. هذا ما يحمي الشركة إذا سأل عميل أو جهة رقابية عن رقم."],
+    ["ما تحتاجه لتشغيله","قرار على مستوى الميزانية من ثلاثة مستويات جاهزة، ثم رفع الصور والنصوص على صفحة الشركة. الملفات كلها في مجلد الحملة."],
+  ],en:[
+    ["What it fixes","The maintenance and facade-cleaning division had no organised advertising presence while competitors in Kuwait post daily."],
+    ["What is ready","16 final ads at 1080×1080, 1080×1350 and 1080×1920 covering feed, story and carousel. Ready copy per ad. A 30-day posting calendar. Reply scripts for the recurring questions."],
+    ["The claims ledger","Every sentence in the ads is recorded with its source. Any sentence outside the ledger does not get published. That is what protects the company if a client or a regulator asks about a number."],
+    ["What you need to run it","A decision on one of three prepared budget levels, then uploading the images and copy to the company page. Everything sits in the campaign folder."],
+  ]},
+  status:"you"
+},
+{
+  id:"farm", ar:"المزرعة", en:"The Farm",
+  h:{ar:"الشاشة تقول لك بنفسها إيش المطلوب اليوم.",en:"The screen itself tells you what today needs."},
+  juice:{ar:"صفر مواعيد ضائعة",en:"Zero missed dates"},
+  juiceSub:{ar:"كل نعجة بسجلها ومرحلتها وموعدها القادم، والتنبيه يجيك قبل الموعد لا بعده.",
+            en:"Every ewe with her record, her stage and her next date, and the alert reaches you before the date, not after."},
+  lede:{ar:"دورة الأغنام ليست شيئاً يُحفظ في الذاكرة: كل نعجة في مرحلة مختلفة، وكل مرحلة لها موعد، وفوات الموعد يعني موسماً ضائعاً. البرنامج يحسب لكل نعجة من تاريخها هي، لا من متوسط القطيع.",
+        en:"A flock cycle is not something you keep in your head: every ewe is at a different stage, every stage has a date, and a missed date is a lost season. The program computes each ewe from her own dates, never from a flock average."},
+  ar_:1440/940,
+  shot:"assets/shots/farm-home.png",
+  beats:[
+    {s:1.0,ox:50,oy:38,mx:null,
+     t:{ar:"سؤال واحد",en:"One question"},
+     d:{ar:"الشاشة الأولى عنوانها سؤال: «إيش يحتاج يدي اليوم؟» — لا لوحة أرقام، لا رسوم بيانية. المطلوب اليوم فقط.",
+        en:"The first screen is titled with a question: “what needs my hand today?” — no dashboard, no charts. Just today's work."}},
+    {s:2.3,ox:46,oy:29,mx:46,my:29,
+     t:{ar:"يحتاج انتباهك",en:"Needs your attention"},
+     d:{ar:"كل سطر مشكلة أو موعد، وجنبه زر يحلّها. «العجول ما تكفي مجموعة الدفع» — واضحة، وحلّها بضغطة.",
+        en:"Each line is a problem or a due date with a button beside it that resolves it. Stated plainly, fixed in one click."}},
+    {s:2.5,ox:26,oy:55,mx:26,my:55,
+     t:{ar:"سجّل بالكتابة أو بالورقة",en:"Type it, or scan the paper"},
+     d:{ar:"اكتب التحديث بلغتك العادية، أو صوّر الورقة المكتوبة بخط اليد. يعرض عليك ما فهمه قبل الحفظ — ما يحفظ شيئاً بلا اختيارك.",
+        en:"Type the update in plain language, or photograph the handwritten sheet. It shows you what it understood before saving — nothing is stored without your choice."}},
+    {s:2.2,ox:50,oy:72,mx:50,my:72,
+     t:{ar:"القطيع بنظرة",en:"The flock at a glance"},
+     d:{ar:"الجلد، الدفع الغذائي، الحمل المبكر، الحمل الأخير، الرضاعة، ولادة اليوم. اضغط أي رقم تفتح القائمة.",
+        en:"Each stage with its count — flushing, early and late pregnancy, nursing, births today. Click any number to open the list."}},
+    {s:2.6,ox:32,oy:6,mx:32,my:6,
+     t:{ar:"تراجع",en:"Undo"},
+     d:{ar:"أي شيء تغيّره ترجع عنه. ما فيه حذف نهائي في البرنامج — التصحيح يُسجَّل ولا يُمحى الأصل.",
+        en:"Anything you change can be reversed. There is no hard delete — a correction is recorded and the original is kept."}},
+  ],
+  doc:{ar:[
+    ["ما الذي يحلّه","المتابعة كانت على ورق وذاكرة. موعد تلقيح أو فطام يفوت = موسم كامل يضيع، والتكلفة لا أحد يعرف مقدارها إلا في آخر السنة."],
+    ["كيف يعمل","كل نعجة سجل مستقل: مرحلتها، تاريخ دخولها المرحلة، وموعدها القادم محسوباً من تاريخها هي مع حدّ تحذير قابل للتعديل. الولادات والأعلاف والتكاليف تُسجَّل في نفس المكان."],
+    ["الإدخال","بالكتابة العادية أو بمسح ورقة مكتوبة بخط اليد. البرنامج يعرض قراءته للمراجعة ولا يطبّق أي سطر قبل موافقتك."],
+    ["الأمان","لا حذف نهائي، وكل تعديل قابل للتراجع، وقاعدة البيانات محفوظة بجانب البرنامج ولها نسخ احتياطية قبل كل تحديث."],
+  ],en:[
+    ["What it fixes","Tracking lived on paper and memory. A missed breeding or weaning date costs a whole season, and nobody knew the real cost until year end."],
+    ["How it works","Each ewe is her own record: her stage, when she entered it, and her next date computed from her own history against an editable warning threshold. Births, feed and costs live in the same place."],
+    ["Entry","Plain typing, or scanning a handwritten sheet. The program shows its reading for review and applies no row before you approve it."],
+    ["Safety","No hard deletes, every change reversible, and the database sits beside the program with a backup taken before every update."],
+  ]},
+  status:"ready"
+},
+{
+  id:"panel", ar:"لوحة التحكم", en:"The Control Panel",
+  h:{ar:"كل ملف للشركة، من نافذة واحدة، بدون بحث.",en:"Every company file, from one window, without hunting."},
+  juice:{ar:"٣٤٬١٢٦ ملفاً",en:"34,126 files"},
+  juiceSub:{ar:"مفهرسة كلها. تكتب كلمة فتطلع النتيجة فوراً — ثم تفتحها أو تحمّلها أو تشوف مكانها على الجهاز.",
+            en:"All indexed. Type a word, get the result instantly — then open it, download it, or reveal it on the machine."},
+  lede:{ar:"المشكلة لم تكن أن الملفات مفقودة، بل أن الوصول إليها يتطلّب معرفة أين حُفظت. اللوحة تشيل هذا الشرط: خمسة أقسام، وبحث واحد يغطي كل شيء، وثلاثة أزرار على كل ملف.",
+        en:"The problem was never that files were missing — it was that reaching one required knowing where it was saved. The panel removes that requirement: five sections, one search over everything, three buttons on every file."},
+  ar_:1440/960,
+  shot:"assets/shots/panel-home.png",
+  beats:[
+    {s:1.0,ox:50,oy:40,mx:null,
+     t:{ar:"خمسة أقسام",en:"Five sections"},
+     d:{ar:"البرامج · التسويق · الهوية · المواقع · المستندات. الرقم الأصفر جنب القسم يعني: فيه شيء ينتظر قرارك أنت.",
+        en:"Programs · Marketing · Brand · Websites · Documents. A yellow number beside a section means something there is waiting on your decision."}},
+    {s:2.5,ox:63,oy:3,mx:63,my:3,
+     t:{ar:"البحث",en:"Search"},
+     d:{ar:"اسم عميل، رقم عرض، أي كلمة. النتائج من كل ملفات الشركة دفعة واحدة — لا يهم في أي مجلد الملف.",
+        en:"A client name, a quotation number, any word. Results from every company file at once — the folder does not matter."}},
+    {s:2.2,ox:38,oy:26,mx:38,my:26,
+     t:{ar:"بطاقة العمل",en:"The work card"},
+     d:{ar:"كل بطاقة عمل: حالته، نسبة إنجازه، وبضغطة تنفتح على الشرح والخطوات وملفاته.",
+        en:"Each card is one piece of work: its status, its progress, and one click opens the explanation, the steps and its files."}},
+    {s:2.4,ox:52,oy:34,mx:52,my:34,
+     t:{ar:"ثلاث حالات فقط",en:"Only three states"},
+     d:{ar:"أخضر «جاهز الآن» · أصفر «ينتظر قرارك» · أزرق «قيد البناء». ما فيه حالة رابعة تحتاج شرحاً.",
+        en:"Green “ready now” · yellow “waiting on you” · blue “being built”. There is no fourth state needing explanation."}},
+  ],
+  doc:{ar:[
+    ["ما الذي يحلّه","الوصول لأي ملف كان يتطلّب معرفة مكانه. والبحث في نظام الماك معطّل على هذا الجهاز، فلا يوجد بديل."],
+    ["كيف تفتحها","ضغطة مزدوجة على «★ مدماك — لوحة التحكم» على سطح المكتب. تُفتح نافذة صغيرة تُترك مفتوحة، واللوحة تنفتح في المتصفح."],
+    ["ما تعطيه","خمسة أقسام مرتّبة، فهرس بحث يغطي ٣٤٬١٢٦ ملفاً، صور مصغّرة للصور وملفات PDF، تصفّح مجلد السيرفر مباشرة، وثلاثة أزرار على كل ملف: تحميل، فتح، وإظهار مكانه في Finder."],
+    ["حدوده","تعمل على هذا الجهاز فقط ولا تُفتح من جهاز آخر. في أول تشغيل قد تطلب منح Terminal صلاحية قراءة الملفات مرة واحدة."],
+  ],en:[
+    ["What it fixes","Reaching any file required knowing where it lived. System search is disabled on this machine, so there was no fallback."],
+    ["How to open it","Double-click “★ مدماك — لوحة التحكم” on the Desktop. A small window opens and stays open; the panel opens in the browser."],
+    ["What it gives","Five ordered sections, a search index over 34,126 files, thumbnails for images and PDFs, direct browsing of the server folder, and three buttons on every file: download, open, and reveal in Finder."],
+    ["Its limits","It runs on this machine only and cannot be opened from another. On first launch it may ask you to grant Terminal file access once."],
+  ]},
+  status:"ready"
+},
+];
+
+/* ══════════ build ══════════ */
+const film = document.getElementById("film");
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const tt = o => (o && (o[L] ?? o.ar)) || "";
+
+function stageHTML(ch, shot, ar, beats, key){
+  return `
+  <div class="track" data-beats="${key}" data-ch="${ch.id}" style="height:${(beats.length)*95}svh">
+    <div class="stage">
+      <div class="frame">
+        <div class="shotbox" style="--ar:${ar}">
+          <img src="${shot}" alt="">
+          ${beats.map((b,i)=> b.mx==null?"":
+            `<span class="mk" data-i="${i}" style="left:${b.mx}%;top:${b.my}%">${i+1}</span>`).join("")}
+        </div>
+        <div class="caption">
+          <span class="n">1</span><h4></h4>
+          <p></p>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function chapterHTML(ch, idx){
+  const badge = ch.status==="you"
+    ? `<span class="pill you">ينتظر قرارك</span>` : `<span class="pill">جاهز الآن</span>`;
+  let html = `<section class="chapter" id="ch-${ch.id}">
+    <div class="opener"><div class="in">
+      <div class="idx">${String(idx+1).padStart(2,"0")} — <span data-ch-name>${esc(ch[L]||ch.ar)}</span></div>
+      <h2 data-ch-h>${esc(tt(ch.h))}</h2>
+      <div class="juice"><b data-ch-j>${esc(tt(ch.juice))}</b><span data-ch-js>${esc(tt(ch.juiceSub))}</span></div>
+      <p class="lede" data-ch-l>${esc(tt(ch.lede))}</p>
+      <p style="margin-top:22px">${badge}</p>
+    </div></div>`;
+  html += stageHTML(ch, ch.shot, ch.ar_, ch.beats, "a");
+  if(ch.shot2) html += stageHTML(ch, ch.shot2, ch.ar2, ch.beats2, "b");
+  html += `<div class="doc"><div class="in">
+      <h3 data-doc-t>${esc(tt(T.docTitle))}</h3>
+      <div data-doc-body>${(ch.doc[L]||ch.doc.ar).map(([h,p])=>
+        `<h4>${esc(h)}</h4><p>${esc(p)}</p>`).join("")}</div>
+    </div></div></section>`;
+  return html;
+}
+
+function render(){
+  document.body.dir = L==="ar" ? "rtl" : "ltr";
+  document.documentElement.lang = L;
+  document.getElementById("lang").textContent = L==="ar" ? "English" : "العربية";
+  document.querySelectorAll("[data-t]").forEach(n=>n.innerHTML = T[n.dataset.t][L]);
+  document.getElementById("stats").innerHTML = STATS.map(s=>
+    `<div><b>${L==="ar"?s.n:s.e}</b><span>${L==="ar"?s.ar:s.en}</span></div>`).join("");
+  film.innerHTML = CH.map(chapterHTML).join("");
+  document.getElementById("rail").innerHTML = CH.map((c,i)=>`<b data-go="ch-${c.id}" title="${esc(c[L]||c.ar)}"></b>`).join("");
+  document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>
+    document.getElementById(b.dataset.go).scrollIntoView({behavior:"smooth"}));
+  bind();
+}
+
+/* ══════════ the camera ══════════ */
+const lerp=(a,b,t)=>a+(b-a)*t;
+const easeIO=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+let tracks=[];
+
+function bind(){
+  tracks = [...document.querySelectorAll(".track")].map(el=>{
+    const ch = CH.find(c=>c.id===el.dataset.ch);
+    const beats = el.dataset.beats==="b" ? ch.beats2 : ch.beats;
+    return {el, ch, beats,
+      box: el.querySelector(".shotbox"),
+      cap: el.querySelector(".caption"),
+      capN: el.querySelector(".caption .n"),
+      capH: el.querySelector(".caption h4"),
+      capP: el.querySelector(".caption p"),
+      marks: [...el.querySelectorAll(".mk")],
+      last:-1};
+  });
+  tick();
+}
+
+function tick(){
+  const vh = window.innerHeight;
+  for(const t of tracks){
+    const r = t.el.getBoundingClientRect();
+    if(r.bottom < -vh || r.top > vh*1.5) continue;
+    const span = Math.max(1, r.height - vh);
+    let p = Math.min(1, Math.max(0, -r.top / span));
+    const n = t.beats.length - 1;
+    const seg = p * n;
+    let i = Math.min(n-1, Math.floor(seg));
+    if(n === 0){ i = 0; }
+    const f = n === 0 ? 0 : easeIO(Math.min(1, seg - i));
+    const A = t.beats[i], B = t.beats[Math.min(n, i+1)] || A;
+    const s  = lerp(A.s,  B.s,  f);
+    const ox = lerp(A.ox, B.ox, f);
+    const oy = lerp(A.oy, B.oy, f);
+    t.box.style.transformOrigin = ox+"% "+oy+"%";
+    t.box.style.transform = "scale("+s.toFixed(4)+")";
+    t.box.style.setProperty("--inv", (1/s).toFixed(4));
+    const active = f > .55 ? Math.min(n, i+1) : i;
+    if(active !== t.last){
+      t.last = active;
+      const b = t.beats[active];
+      t.capN.textContent = active+1;
+      t.capH.textContent = tt(b.t);
+      t.capP.textContent = tt(b.d);
+      t.marks.forEach(m=>m.classList.toggle("on", +m.dataset.i === active));
+    }
+  }
+  // rail
+  const mid = window.scrollY + vh/2;
+  CH.forEach((c,i)=>{
+    const el = document.getElementById("ch-"+c.id); if(!el) return;
+    const top = el.offsetTop, bot = top + el.offsetHeight;
+    const dot = document.querySelectorAll("#rail b")[i];
+    if(dot) dot.classList.toggle("on", mid>=top && mid<bot);
+  });
+  raf = 0;
+}
+let raf = 0;
+const onScroll = () => { if(!raf) raf = requestAnimationFrame(tick); };
+addEventListener("scroll", onScroll, {passive:true});
+addEventListener("resize", onScroll, {passive:true});
+
+document.getElementById("lang").onclick = () => {
+  L = L==="ar" ? "en" : "ar"; localStorage.setItem("mwLang", L);
+  const y = window.scrollY; render(); window.scrollTo(0,y);
+};
+render();
+
+/* ?y=<px> jumps straight to a scroll offset — used for render checks and deep links. */
+(function(){
+  const q = new URLSearchParams(location.search).get("y");
+  if(q !== null){
+    const target = +q;
+    const go = () => { window.scrollTo(0, target); onScroll(); };
+    go();
+    let n = 0;
+    const id = setInterval(() => { go(); if(++n > 25 || Math.abs(scrollY-target) < 2) clearInterval(id); }, 80);
+    addEventListener("load", go);
+  }
+})();
+</script>
+</body>
+</html>
